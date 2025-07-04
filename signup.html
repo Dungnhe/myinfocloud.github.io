@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng ký tài khoản</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      background: #1e293b;
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #059669;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #93c5fd;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>Đăng ký tài khoản mới</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Mật khẩu">
+    <button onclick="signup()">Tạo tài khoản</button>
+    <a href="login.html">Đã có tài khoản? Đăng nhập</a>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_xA52BAXXo0x5phdCRk4ebpObsYbakfE",
+      authDomain: "cloudpc-ea2a3.firebaseapp.com",
+      databaseURL: "https://cloudpc-ea2a3-default-rtdb.firebaseio.com",
+      projectId: "cloudpc-ea2a3",
+      storageBucket: "cloudpc-ea2a3.appspot.com",
+      messagingSenderId: "905130504405",
+      appId: "1:905130504405:web:dba8f5b219b650c5cf325c",
+      measurementId: "G-71EELSND76"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.signup = function () {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        alert("❌ Vui lòng nhập đầy đủ thông tin.");
+        return;
+      }
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("✅ Đăng ký thành công!");
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("❌ Lỗi: " + error.message);
+        });
+    };
+  </script>
+</body>
+</html>
