@@ -1,161 +1,105 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cloud Gaming - Nhận thời gian chơi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-gradient: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      --box-bg: rgba(255, 255, 255, 0.06);
-      --highlight: #00c6ff;
-      --accent: #18ffff;
-      --text: #ffffff;
-      --muted: #b0bec5;
+      --bg-dark: #0f172a;
+      --bg-box: #1e293b;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #0ea5e9;
+      --text-light: #ffffff;
+      --text-muted: #cbd5e1;
     }
-
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
-
     body {
       font-family: 'Poppins', sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text);
+      background-color: var(--bg-dark);
+      color: var(--text-light);
       padding: 2rem;
       max-width: 700px;
       margin: auto;
     }
-
     h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
       text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
       color: var(--accent);
     }
-
-    .card {
-      background: var(--box-bg);
-      padding: 1.5rem;
+    .step, .invite-section, .time-section, .history-section {
+      background: var(--bg-box);
+      padding: 1.25rem 1.5rem;
       border-radius: 1rem;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 12px rgba(0,0,0,0.4);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 0 12px rgba(0,0,0,0.3);
     }
-
     .step {
-      margin-bottom: 1rem;
-      font-weight: 600;
-      color: var(--muted);
+      border-left: 5px solid var(--accent);
     }
-
     label {
       display: block;
-      margin-top: 1rem;
       margin-bottom: 0.5rem;
+      font-weight: 600;
     }
-
     input {
       padding: 0.75rem;
       width: 100%;
-      border-radius: 0.75rem;
       border: none;
+      border-radius: 0.75rem;
+      margin-top: 0.25rem;
       font-size: 1rem;
       outline: none;
-      background: rgba(255,255,255,0.1);
-      color: white;
     }
-
     button {
       margin-top: 1rem;
-      padding: 0.75rem 1.25rem;
-      background-color: var(--highlight);
-      color: black;
-      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--primary);
+      color: white;
       border: none;
       border-radius: 0.75rem;
+      font-weight: bold;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: background-color 0.3s;
     }
-
     button:hover {
-      background-color: var(--accent);
-      color: #000;
+      background-color: var(--primary-hover);
     }
-
     .hidden {
       display: none;
     }
-
     .code-box {
-      text-align: center;
       font-size: 1.25rem;
       background: var(--accent);
-      padding: 0.75rem;
+      display: inline-block;
+      padding: 0.75rem 1.25rem;
       margin: 1rem 0;
       border-radius: 0.75rem;
-      color: #000;
       font-weight: bold;
     }
-
     .history-section ul {
       list-style: none;
-      margin-top: 1rem;
       padding-left: 0;
+      margin-top: 1rem;
     }
-
     .history-section li {
       padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      color: var(--muted);
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      color: var(--muted);
+      border-bottom: 1px solid #334155;
+      color: var(--text-muted);
     }
   </style>
-</head>
-<body>
-
-  <h1>🎮 Cloud Gaming</h1>
-
-  <div class="card">
-    <div class="step">📥 <strong>Bước 1:</strong> Tải Limore Cloud Gaming trên CH Play</div>
-    <div class="step">🔐 <strong>Bước 2:</strong> Đăng nhập tài khoản</div>
-    <div class="step">📨 <strong>Bước 3:</strong> Lấy mã mời</div>
-    <div class="step">⏳ <strong>Bước 4:</strong> Nhập mã bên dưới (tối đa 2 tiếng/ngày)</div>
-    <div class="code-box">Mã mẫu: <strong>D295872</strong></div>
-  </div>
-
-  <div class="card">
-    <label for="invite">📨 Nhập mã mời:</label>
-    <input type="text" id="invite" placeholder="Ví dụ: D295872">
-    <button onclick="checkInvite()">Tiếp tục</button>
-  </div>
-
-  <div class="card hidden" id="timeSection">
-    <label for="duration">⏳ Số phút chơi (1-120):</label>
-    <input type="number" id="duration" min="1" max="120" placeholder="VD: 60">
-    <button onclick="confirmTime()">Mở khoá chơi</button>
-  </div>
-
-  <div class="card history-section">
-    <h3>📜 Lịch sử mã mời</h3>
-    <ul id="historyList"></ul>
-  </div>
-
-  <div class="footer">© 2025 CloudPC - All rights reserved</div>
-
-  <!-- Firebase + JS -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyB_xA52BAXXo0x5phdCRk4ebpObsYbakfE",
@@ -167,10 +111,41 @@
       appId: "1:905130504405:web:dba8f5b219b650c5cf325c",
       measurementId: "G-71EELSND76"
     };
-
     firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
     const db = firebase.database();
+  </script>
+</head>
+<body>
+  <h1>🎮 Cloud Gaming - Mở khóa thời gian chơi</h1>
+  <div id="authCheckMessage" style="color: yellow; text-align: center; margin-bottom: 1rem;"></div>
 
+  <div id="mainApp" style="display: none;">
+    <div class="step">🔹 <strong>Bước 1:</strong> Tải <strong>Limore Cloud Gaming</strong> trên CH Play</div>
+    <div class="step">🔹 <strong>Bước 2:</strong> Đăng nhập tài khoản Limore</div>
+    <div class="step">🔹 <strong>Bước 3:</strong> Lấy mã mời của tài khoản bạn</div>
+    <div class="step">🔹 <strong>Bước 4:</strong> Nhập mã mời bên dưới (tối đa 2 tiếng mỗi ngày)</div>
+    <div class="code-box">💬 Mã mời ví dụ: <strong>D295872</strong></div>
+
+    <div class="invite-section">
+      <label for="invite">📨 Nhập mã mời:</label>
+      <input type="text" id="invite" placeholder="Ví dụ: D295872" />
+      <button onclick="checkInvite()">Tiếp tục</button>
+    </div>
+
+    <div class="time-section hidden" id="timeSection">
+      <label for="duration">⏳ Nhập số phút chơi (tối đa 120 phút):</label>
+      <input type="number" id="duration" min="1" max="120" placeholder="VD: 60" />
+      <button onclick="confirmTime()">Mở khoá chơi</button>
+    </div>
+
+    <div class="history-section">
+      <h2>📜 Lịch sử nhập mã</h2>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
+
+  <script>
     function checkInvite() {
       const code = document.getElementById("invite").value.trim();
       const pattern = /^D\d{5,8}$/;
@@ -182,52 +157,51 @@
     }
 
     function confirmTime() {
+      const user = auth.currentUser;
+      if (!user) return alert("Bạn cần đăng nhập!");
+
       const code = document.getElementById("invite").value.trim();
       const minutes = parseInt(document.getElementById("duration").value);
-      const today = new Date().toISOString().slice(0, 10);
-      const lastUse = localStorage.getItem("lastUseDate");
-
-      if (lastUse === today) {
-        alert("❌ Bạn đã sử dụng mã mời hôm nay rồi.");
-        return;
-      }
-
       if (!code || isNaN(minutes) || minutes <= 0 || minutes > 120) {
-        alert("⛔ Nhập số phút hợp lệ (1-120).");
+        alert("⛔ Vui lòng nhập hợp lệ (1-120 phút)!");
         return;
       }
 
       const now = new Date().toLocaleString("vi-VN");
-      db.ref("lichsu").push({
-        maMoi: code,
-        thoiGian: now,
-        soPhut: minutes
-      });
-
-      localStorage.setItem("lastUseDate", today);
-
-      alert(`✅ Mã hợp lệ! Bạn được mở khoá trong ${minutes} phút.`);
+      const entry = {
+        time: now,
+        code: code,
+        minutes: minutes
+      };
+      const userHistoryRef = db.ref("history/all");
+      userHistoryRef.push(entry);
+      alert("✅ Mã hợp lệ! Bạn được mở khoá " + minutes + " phút.");
+      renderHistory();
     }
 
     function renderHistory() {
       const historyList = document.getElementById("historyList");
-      db.ref("lichsu").on("value", (snapshot) => {
+      const ref = db.ref("history/all");
+      ref.once("value", snapshot => {
         historyList.innerHTML = "";
-        const arr = [];
-        snapshot.forEach((child) => {
+        snapshot.forEach(child => {
           const data = child.val();
-          arr.push(`<strong>${data.maMoi}</strong> - ${data.soPhut} phút - ${data.thoiGian}`);
-        });
-        arr.reverse().forEach(item => {
           const li = document.createElement("li");
-          li.innerHTML = item;
+          li.innerHTML = `${data.time} - Mã: <strong>${data.code}</strong> - ${data.minutes} phút`;
           historyList.appendChild(li);
         });
       });
     }
 
-    renderHistory();
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        document.getElementById("authCheckMessage").innerText = "✅ Đã đăng nhập: " + user.email;
+        document.getElementById("mainApp").style.display = "block";
+        renderHistory();
+      } else {
+        document.getElementById("authCheckMessage").innerHTML = "⚠️ Vui lòng <a href='/login.html' style='color: #3b82f6;'>đăng nhập tại đây</a> để sử dụng!";
+      }
+    });
   </script>
-
 </body>
 </html>
