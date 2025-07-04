@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Gaming - Nhận thời gian chơi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-box: #1e293b;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #0ea5e9;
+      --text-light: #ffffff;
+      --text-muted: #cbd5e1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      padding: 2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: var(--accent);
+    }
+
+    .step, .invite-section, .time-section, .history-section {
+      background: var(--bg-box);
+      padding: 1.25rem 1.5rem;
+      border-radius: 1rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    }
+
+    .step {
+      border-left: 5px solid var(--accent);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input {
+      padding: 0.75rem;
+      width: 100%;
+      border: none;
+      border-radius: 0.75rem;
+      margin-top: 0.25rem;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .code-box {
+      font-size: 1.25rem;
+      background: var(--accent);
+      display: inline-block;
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      border-radius: 0.75rem;
+      font-weight: bold;
+    }
+
+    .history-section ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 1rem;
+    }
+
+    .history-section li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #334155;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎮 Cloud Gaming - Mở khóa thời gian chơi</h1>
+
+  <div class="step">🔹 <strong>Bước 1:</strong> Tải <strong>Limore Cloud Gaming</strong> trên CH Play</div>
+  <div class="step">🔹 <strong>Bước 2:</strong> Đăng nhập tài khoản Limore</div>
+  <div class="step">🔹 <strong>Bước 3:</strong> Lấy mã mời của tài khoản bạn</div>
+  <div class="step">🔹 <strong>Bước 4:</strong> Nhập mã mời bên dưới (tối đa 2 tiếng mỗi ngày)</div>
+
+  <div class="code-box">💬 Mã mời ví dụ: <strong>D295872</strong></div>
+
+  <!-- MÃ MỜI -->
+  <div class="invite-section">
+    <label for="invite">📨 Nhập mã mời:</label>
+    <input type="text" id="invite" placeholder="Ví dụ: D295872">
+    <button onclick="checkInvite()">Tiếp tục</button>
+  </div>
+
+  <!-- NHẬP THỜI GIAN -->
+  <div class="time-section hidden" id="timeSection">
+    <label for="duration">⏳ Nhập số phút chơi (tối đa 120 phút):</label>
+    <input type="number" id="duration" min="1" max="120" placeholder="VD: 60">
+    <button onclick="confirmTime()">Mở khoá chơi</button>
+  </div>
+
+  <!-- LỊCH SỬ -->
+  <div class="history-section">
+    <h2>📜 Lịch sử nhập mã</h2>
+    <ul id="historyList"></ul>
+  </div>
+
+  <script>
+    function checkInvite() {
+      const code = document.getElementById("invite").value.trim();
+      const pattern = /^D\d{5,8}$/;
+
+      if (pattern.test(code)) {
+        document.getElementById("timeSection").classList.remove("hidden");
+      } else {
+        alert("❌ Mã mời không hợp lệ! Phải bắt đầu bằng D và theo sau là 5-8 chữ số.");
+      }
+    }
+
+    function confirmTime() {
+      const code = document.getElementById("invite").value.trim();
+      const minutes = parseInt(document.getElementById("duration").value);
+      const today = new Date().toISOString().slice(0, 10);
+
+      const lastUse = localStorage.getItem("lastUseDate");
+
+      if (lastUse === today) {
+        alert("❌ Bạn đã sử dụng mã mời hôm nay rồi. Hãy quay lại vào ngày mai.");
+        return;
+      }
+
+      if (!code || isNaN(minutes) || minutes <= 0) {
+        alert("⛔ Vui lòng nhập đầy đủ và hợp lệ!");
+        return;
+      }
+
+      if (minutes > 120) {
+        alert("⚠️ Bạn chỉ được chơi tối đa 120 phút mỗi ngày!");
+        return;
+      }
+
+      const history = JSON.parse(localStorage.getItem("history") || "[]");
+      const now = new Date().toLocaleString("vi-VN");
+      history.push(`${now} - Mã: <strong>${code}</strong> - ${minutes} phút`);
+      localStorage.setItem("history", JSON.stringify(history));
+
+      localStorage.setItem("lastUseDate", today);
+
+      alert("✅ Mã hợp lệ! Bạn được mở khoá trong " + minutes + " phút.");
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const historyList = document.getElementById("historyList");
+      const history = JSON.parse(localStorage.getItem("history") || "[]");
+      historyList.innerHTML = "";
+      history.reverse().forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = item;
+        historyList.appendChild(li);
+      });
+    }
+
+    renderHistory();
+  </script>
+</body>
+</html>

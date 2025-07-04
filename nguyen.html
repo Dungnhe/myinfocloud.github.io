@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Video bí mật của Huỳnh Nhật An</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    video {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 25px lime;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: lime;
+      padding: 10px 15px;
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      z-index: 10;
+    }
+
+    .back-button:hover {
+      background: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nút quay lại -->
+  <a href="index.html" class="back-button">← Quay lại</a>
+
+  <!-- Video của Huỳnh Nhật An -->
+  <video controls autoplay>
+    <source src="hoang_nguyen.mp4" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video này.
+  </video>
+
+</body>
+</html>

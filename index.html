@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>My info</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      cursor: pointer;
+    }
+
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      filter: blur(4px) brightness(0.5);
+    }
+
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px 50px;
+      border-radius: 12px;
+    }
+
+    .content h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .content p {
+      font-size: 20px;
+    }
+
+    .secret-button {
+      margin-top: 20px;
+    }
+
+    .secret-button button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background: #00ffff;
+      color: black;
+      cursor: pointer;
+    }
+
+    .social-links {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px 25px;
+      border-radius: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .social-links a {
+      display: inline-block;
+    }
+
+    .social-icon {
+      width: 32px;
+      height: 32px;
+      filter: brightness(0) invert(1);
+      transition: transform 0.3s ease;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video nền -->
+  <video id="bg-video" autoplay loop muted playsinline>
+    <source src="video nền.mp4" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video.
+  </video>
+
+  <!-- Nội dung giới thiệu -->
+  <div class="content">
+    <h1>Xin chào</h1>
+    <p>I AM DUNG</p>
+
+    <!-- Nút Secret -->
+    <div class="secret-button">
+      <button onclick="enterSecret()">sít rịt 🔒</button>
+    </div>
+  </div>
+
+  <!-- Mạng xã hội với logo -->
+  <div class="social-links">
+    <a href="https://www.facebook.com/laylinkprofilebocoincak" target="_blank">
+      <img src="tải_xuống-removebg-preview.png" alt="Facebook" class="social-icon">
+    </a>
+    <a href="https://github.com/Dungnhe" target="_blank">
+      <img src="tải_xuống__1_-removebg-preview.png" alt="GitHub" class="social-icon">
+    </a>
+  </div>
+
+  <!-- Script -->
+  <script>
+  function enterSecret() {
+    const code = prompt("Nhập mã bí mật để truy cập:");
+
+    if (code === "hoangcongdung") {
+      window.location.href = "secret.html";
+    } else if (code === "huynhnhatan") {
+      window.location.href = "huynh.html";
+      } else if (code === "hoangnguyen") {
+      window.location.href = "nguyen.html";
+      } else if (code === "dinhthienbao") {
+      window.location.href = "bao.html";
+      } else if (code === "vuquangduy") {
+      window.location.href = "duy.html";
+      } else if (code === "cloudpc") {
+      window.location.href = "cloudgaming.html";
+   } else if (code === "login") {
+    window.location.href = "login.php"; // Trang đăng nhập
+  } else if (code === "register") {
+    window.location.href = "register.php"; // Trang đăng ký
+    } else if (code !== null) {
+      alert("Sai mã rồi!");
+    }
+  }
+
+  // Kích hoạt video nền có âm thanh khi người dùng nhấp vào
+  const video = document.getElementById('bg-video');
+  window.addEventListener('click', () => {
+    video.muted = false;
+    video.play();
+  });
+</script>
+
